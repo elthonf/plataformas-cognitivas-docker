@@ -36,6 +36,4 @@ bash geraconfig.sh
 docker run -d --network plat_network -p 443:8080 --restart always -v $(pwd)/config:/myServer/config --name modelmanager platserver python modelmanager.py 
 docker run -it --network plat_network -p 443:8080  -v $(pwd)/config:/myServer/config --name modelmanager platserver /bin/bash
 
-
-
 ```
