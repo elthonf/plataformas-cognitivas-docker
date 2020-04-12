@@ -1,0 +1,12 @@
+{
+  "models": {
+    "modelo01": {
+      "version": "V01",
+      "url": "http://serving01:8080/predict"
+    },
+    "modelo02": {
+      "version": "V01",
+      "url": "http://serving02:8080/predict"
+    }
+  }
+}

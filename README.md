@@ -4,3 +4,38 @@ __Prof. Elthon Manhas de Freitas__
 Repositório para as atividades de plataformas cognitivas ligadas a Serving em Containers usando o Docker
 
 
+## 1. Gerar imagem do serviço:
+
+
+```
+docker build -t platserver -f dockerbuilds/DockerServer.txt .
+```
+
+## 2. Criar e rodar os Conteineres:
+
+Criar uma rede que será compartilhada entre todos os conteineres:  
+```
+docker network create plat_network
+```
+# $(pwd)/config
+
+
+
+Apenas entrar no contêiner, sem executar nada:
+```
+docker run -it --network plat_network -p 8080:8080 -v $(pwd)/config:/myServer/config platserver /bin/bash
+```
+
+Criar e rodar container de gerenciador de modelos:  
+```
+docker run -d --network plat_network -p 8080:8080 --restart always -v $(pwd)/config:/myServer/config --name modelmanager platserver python modelmanager.py 
+```
+
+Criar e rodar microconteineres para os modelos preditivos:  
+```
+docker run -d --network plat_network -p 10001:8080 --restart always --name serving01 platserver python servingmodel.py models/modelo01.joblib 8080
+docker run -d --network plat_network -p 10002:8080 --restart always --name serving02 platserver python servingmodel.py models/modelo02.joblib 8080
+
+
+
+```

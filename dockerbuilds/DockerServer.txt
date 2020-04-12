@@ -1,0 +1,30 @@
+FROM python:3.7
+LABEL maintainer="elthon@alumni.usp.br"
+LABEL version="1.0"
+
+# Instala aplicações básicas para caso precise vasculhar um contêiner da imagem
+RUN apt-get update
+RUN apt-get install nano
+
+# Cria um diretório Base na imagem
+RUN mkdir -p /myServer
+RUN mkdir -p /Log
+
+# Copia todo o conteúdo para o diretório Base
+COPY . /myServer
+
+# Determina qual o diretório "padrão" do contêiner quando o mesmo iniciar
+WORKDIR /myServer
+
+# Instala pacotes Python
+RUN pip install --upgrade pip
+RUN pip install -r /myServer/requirements.txt
+
+# Expõe alguns diretórios para o HOST
+VOLUME /myServer/config
+VOLUME /Log
+
+
+# Expõe para o HOST algumas portas, por padrão
+EXPOSE 80
+EXPOSE 8080
