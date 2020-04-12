@@ -16,10 +16,8 @@ docker build -t platserver -f dockerbuilds/DockerServer.txt .
 Criar uma rede que será compartilhada entre todos os conteineres:  
 ```
 docker network create plat_network
+docker network inspect plat_network
 ```
-# $(pwd)/config
-
-
 
 Apenas entrar no contêiner, sem executar nada:
 ```
@@ -29,12 +27,20 @@ docker run -it --network plat_network -p 8080:8080 -v $(pwd)/config:/myServer/co
 Criar e rodar container de gerenciador de modelos:  
 ```
 docker run -d --network plat_network -p 8080:8080 --restart always -v $(pwd)/config:/myServer/config --name modelmanager platserver python modelmanager.py 
+docker run -it --network plat_network -p 8080:8080  -v $(pwd)/config:/myServer/config --name modelmanager platserver /bin/bash
+
+
+docker run -d --network plat_network -p 443:8080 --restart always -v $(pwd)/config:/myServer/config --name modelmanager platserver python modelmanager.py 
+docker run -it --network plat_network -p 443:8080  -v $(pwd)/config:/myServer/config --name modelmanager platserver /bin/bash
+
+
+
 ```
 
 Criar e rodar microconteineres para os modelos preditivos:  
 ```
-docker run -d --network plat_network -p 10001:8080 --restart always --name serving01 platserver python servingmodel.py models/modelo01.joblib 8080
-docker run -d --network plat_network -p 10002:8080 --restart always --name serving02 platserver python servingmodel.py models/modelo02.joblib 8080
+sudo docker run -d --network plat_network -p 10001:8080 --restart always --name serving01 platserver python servingmodel.py models/modelo01.joblib 8080
+sudo docker run -d --network plat_network -p 10002:8080 --restart always --name serving02 platserver python servingmodel.py models/modelo02.joblib 8080
 
 
 
