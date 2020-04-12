@@ -1,5 +1,7 @@
 # Atividade de Plataformas Cognitivas Docker  
-__Prof. Elthon Manhas de Freitas__  
+__Prof. MSc. Elthon Manhas de Freitas__  
+
+![alt text](images/capa.png)
 
 Repositório para as atividades de plataformas cognitivas ligadas a Serving em Containers usando o Docker
 
@@ -11,7 +13,7 @@ Repositório para as atividades de plataformas cognitivas ligadas a Serving em C
 docker build -t platserver -f dockerbuilds/DockerServer.txt .
 ```
 
-## 2. Criar e rodar os Conteineres:
+## 2. Criar e rodar os Contêineres:
 
 Criar uma rede que será compartilhada entre todos os conteineres:  
 ```
@@ -37,3 +39,5 @@ docker run -d --network plat_network -p 443:8080 --restart always -v $(pwd)/conf
 docker run -it --network plat_network -p 443:8080  -v $(pwd)/config:/myServer/config --name modelmanager platserver /bin/bash
 
 ```
+
+Ok, se até aqui tudo estiver certo, pode começar a utilizar a plataforma para fazer predições.
