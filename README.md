@@ -24,23 +24,17 @@ Apenas entrar no contêiner, sem executar nada:
 docker run -it --network plat_network -p 8080:8080 -v $(pwd)/config:/myServer/config platserver /bin/bash
 ```
 
-Criar e rodar container de gerenciador de modelos:  
-```
-docker run -d --network plat_network -p 8080:8080 --restart always -v $(pwd)/config:/myServer/config --name modelmanager platserver python modelmanager.py 
-docker run -it --network plat_network -p 8080:8080  -v $(pwd)/config:/myServer/config --name modelmanager platserver /bin/bash
-
-
-docker run -d --network plat_network -p 443:8080 --restart always -v $(pwd)/config:/myServer/config --name modelmanager platserver python modelmanager.py 
-docker run -it --network plat_network -p 443:8080  -v $(pwd)/config:/myServer/config --name modelmanager platserver /bin/bash
-
-
-
-```
-
 Criar e rodar microconteineres para os modelos preditivos:  
 ```
 sudo docker run -d --network plat_network -p 10001:8080 --restart always --name serving01 platserver python servingmodel.py models/modelo01.joblib 8080
 sudo docker run -d --network plat_network -p 10002:8080 --restart always --name serving02 platserver python servingmodel.py models/modelo02.joblib 8080
+```
+
+Criar e rodar container de gerenciador de modelos:  
+```
+bash geraconfig.sh
+docker run -d --network plat_network -p 443:8080 --restart always -v $(pwd)/config:/myServer/config --name modelmanager platserver python modelmanager.py 
+docker run -it --network plat_network -p 443:8080  -v $(pwd)/config:/myServer/config --name modelmanager platserver /bin/bash
 
 
 

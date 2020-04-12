@@ -14,3 +14,6 @@ echo '    }                                                 ' >> config/microser
 echo '  }                                                   ' >> config/microservices.json
 echo '}                                                     ' >> config/microservices.json
 
+echo "Arquivo de configuração atualizado com sucesso. Veja seu conteúdo: "
+
+cat config/microservices.json
