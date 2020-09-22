@@ -42,7 +42,8 @@ echo "Cria a regra de firewall $FIRENAME no projeto $PROJECT_ID"
 gcloud compute --project=$PROJECT_ID firewall-rules create $FIRENAME \
    --description=Libera\ portas\ necess\árias\ para\ pr\áticas\ de\ plataformas\ cognitivas \
    --direction=INGRESS --priority=1000 --network=default --action=ALLOW \
-   --rules=tcp:8080,tcp:8081,tcp:5000,tcp:1234,tcp:1235,tcp:1236,tcp:1237 \
+   --rules=tcp:8080,tcp:8081,tcp:5000,tcp:1234,tcp:443,tcp:1235,tcp:1236,tcp:1237 \
    --source-ranges=0.0.0.0/0 \
    --target-tags=fiap-plataformas
+
 
