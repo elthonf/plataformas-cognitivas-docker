@@ -6,6 +6,9 @@ __Prof. MSc. Elthon Manhas de Freitas__
 Repositório para as atividades de plataformas cognitivas ligadas a Serving em Containers usando o Docker
 
 
+Informações gerais:
+`Python 3.7`
+
 ## 1. Gerar imagem do serviço:
 
 

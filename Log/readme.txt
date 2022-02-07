@@ -1,0 +1,1 @@
+Pasta vazia para arquivamento de Logs
