@@ -1,13 +1,11 @@
-from flask import Flask,request,redirect,Response
+from flask import Flask,request,redirect,Response, send_file, make_response
 import requests
-import json
-import sys
-import datetime
-import uuid
+import sys, os, io, uuid, datetime, json, zipfile
 
 app = Flask(__name__)
 
-@app.route('/',methods=['GET','POST'])
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
     return 'Model Manager is running!'
 
@@ -18,6 +16,7 @@ def try_or(fn, default=None):
     except:
         return default
 
+
 def logapp(jsoncontent: dict, sufix: str = None):
     try:
         logpath = f"./Log/{str( uuid.uuid1() )} EXEC {str(sufix)}.log"
@@ -26,6 +25,7 @@ def logapp(jsoncontent: dict, sufix: str = None):
     except Exception as err:
         print(err)
         pass
+
 
 @app.route('/predict',methods=['GET','POST'])
 def predict(request = request):
@@ -71,12 +71,25 @@ def predict(request = request):
     return response
 
 
+@app.route('/download', methods=['GET', 'POST'])
+def download():
+    FILEPATH = "./Log"
+    fileobj = io.BytesIO()
+    with zipfile.ZipFile(fileobj, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+        for root, dirs, files in os.walk(FILEPATH):
+            for file in files:
+                zip_file.write(os.path.join(root, file))
+    fileobj.seek(0)
+    response = make_response(fileobj.read())
+    response.headers.set('Content-Type', 'zip')
+    response.headers.set('Content-Disposition', 'attachment', filename='Logs.zip')
+    return response
+
 
 if __name__ == '__main__':
     args = sys.argv[1:]
     if len(args) < 1:
         args.append('8080')
-
     print(args)
 
     app.run(port=args[0], host='0.0.0.0')
